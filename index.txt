@@ -1,0 +1,139 @@
+////Insertar al menos 15 publicaciones nuevas con almenos 2 comentarios por publicación://///
+
+db.posts.insertMany([
+  {title: "title1", body: "post1", username: "user1",comments: [{ username: "user1", body: "comment1" },{ username: "user2", body: "comment2" }]},
+  {title: "title2", body: "post2", username: "user2",comments: [{ username: "user2", body: "comment3" },{ username: "user6", body: "comment4" }]}, 
+  ])
+db.posts.insertMany([
+ {title: "title3", body: "post3", username: "user3",comments: [{ username: "user3", body: "comment5" },{ username: "user3", body: "comment6" }]},
+  {title: "title4", body: "post4", username: "user4",comments: [{ username: "user4", body: "comment7" },{ username: "user7", body: "comment8" }]},
+  {title: "title5", body: "post5", username: "user5",comments: [{ username: "user5", body: "comment9" },{ username: "user5", body: "comment10" }]},
+  {title: "title6", body: "post6", username: "user6",comments: [{ username: "user6", body: "comment11" },{ username: "user1", body: "comment12" }]},
+  {title: "title7", body: "post7", username: "user7",comments: [{ username: "user7", body: "comment13" },{ username: "user8", body: "comment14" }]},
+  {title: "title8", body: "post8", username: "user8",comments: [{ username: "user8", body: "comment15" },{ username: "user9", body: "comment16" }]},
+  {title: "title9", body: "post9", username: "user9",comments: [{ username: "user9", body: "comment17" },{ username: "user10", body: "comment18" }]},
+  {title: "title10", body: "post10", username: "user10",comments: [{ username: "user10", body: "comment19" },{ username: "user11", body: "comment20" }]},
+  {title: "title11", body: "post11", username: "user11",comments: [{ username: "user11", body: "comment21" },{ username: "user14", body: "comment22" }]},
+  {title: "title12", body: "post12", username: "user12",comments: [{ username: "user12", body: "comment23" },{ username: "user13", body: "comment24" }]},
+  {title: "title13", body: "post13", username: "user13",comments: [{ username: "user13", body: "comment25" },{ username: "user12", body: "comment26" }]},
+  {title: "title14", body: "post14", username: "user14",comments: [{ username: "user14", body: "comment27" },{ username: "user4", body: "comment28" }]},
+  {title: "title15", body: "post15", username: "user15",comments: [{ username: "user15", body: "comment29" },{ username: "user15", body: "comment30" }]}
+  ])
+
+ //////////// Insertar al menos 10 nuevos usuarios:Username,Email,Age/////////////
+
+  db.users.insertMany([
+    {Username: "user1", Email: "user1@gmail.com", Age: 1},
+    {Username: "user2", Email: "user2@gmail.com", Age: 2},
+    {Username: "user3", Email: "user3@gmail.com", Age: 3},
+    {Username: "user4", Email: "user4@gmail.com", Age: 4},
+    {Username: "user5", Email: "user5@gmail.com", Age: 5},
+    {Username: "user6", Email: "user6@gmail.com", Age: 6},
+    {Username: "user7", Email: "user7@gmail.com", Age: 7},
+    {Username: "user8", Email: "user8@gmail.com", Age: 8},
+    {Username: "user9", Email: "user9@gmail.com", Age: 9},
+    {Username: "user10", Email: "user10@gmail.com", Age: 10}
+  ])
+
+  ////////////Actualizar publicaciones: Actualiza todos los campos de una publicación////
+
+db.posts.updateOne({ title: 'title1' },
+
+{ $set:{title: "This one has been updated", body: "updated", username: "user10",}})
+
+///////////Cambiar el body de una publicación.//////////////////////////
+
+db.posts.updateOne({ title: 'title2' },
+{$set: {body: "body updated"}})
+
+////////////Actualizar comentarios: Cambiar el body de un comentario.///////////////
+
+db.posts.updateOne({ title: 'title3' },
+{
+$set: {
+comments: [{body: "comment updated"}]
+}})
+
+/////////Actualizar usuarios:Actualiza todos los campos de un usuario///////////
+
+db.users.updateOne({Username: "user1"},
+{ $set:{Username: "user 1 updated", Email: "emailupdated@gmail.com", Age: 100}})
+
+////////Cambiar el email de dos usuarios es decir hacer la query dos veces////////////
+db.users.updateOne({Username: "user2"},
+{$set: {Email: "user2emailupdated@gmail.com"}})
+
+db.users.updateOne({Username: "user3"},
+{$set: {Email: "user3emailupdated@gmail.com"}})
+
+////////Aumenta en 5 años la edad de un usuario///////////
+
+db.users.updateOne({Username: 'user4' },
+{$inc: {
+Age: 5}})
+
+
+////////////Seleccionar todas las publicaciones/////////////
+
+db.posts.find()
+
+///////////Selecciona las publicaciones que coincidan con el username indicado///////
+
+db.posts.find({username: 'user1' })
+
+//////////Seleccione todos los usuarios con una edad mayor a 20///////////
+
+db.users.find({Age:{$gt:20}})
+
+///////Seleccione todos los usuarios con una edad inferior a 23////////////
+
+db.users.find({Age:{$lt:23}})
+
+
+////////Seleccione todos los usuarios que tengan una edad entre 25 y 30 años///////
+
+db.users.find({Age:{$gt:8,$lt:30}})
+
+///////Muestra los usuarios de edad menor a mayor y viceversa////////////
+
+db.users.find().sort({ Age: 1 })
+db.users.find().sort({ Age: -1 })
+
+////////Seleccione el número total de usuarios/////////
+
+db.users.find().count()
+
+/Seleccione todas las publicaciones de la siguiente manera: Título de la publicación: "título de las publicaciones"/
+
+db.posts.find().forEach((doc)=> {
+print("Post title: " + doc.title)})
+
+////////////Selecciona solo 2 usuarios/////////////
+
+db.users.find().limit(2)
+
+////////Busca por title 2 publicaciones/////////
+
+db.posts.findOne({ title: 'title10' })
+db.posts.findOne({ title: 'title11' })
+
+//////////Elimina a todos los usuarios con una edad mayor a 30//////////////
+db.users.deleteMany({Age:{$gt:30}})
+db.users.remove({Age:{$gt:30}})
+
+///////////Seleccione el número total de publicaciones que tienen más de un comentario////////
+
+db.posts.find({ $or:[
+{comments:{$not:{$size:1}}, comments: {$not:{$size:0}}}]}).count()
+
+
+/////////Seleccione la última publicación creada////////////
+db.posts.find().sort({_id: -1}).limit(1)
+db.posts.find().sort({$natural: -1}).limit(1)
+
+//////////Selecciona 5 publicaciones y que sean las últimas creadas////////
+db.posts.find().sort({$natural: -1}).limit(5)
+
+//////////Elimina todas las publicaciones que tengan más de un comentario///////////
+db.posts.deleteMany({ $or:[
+{comments:{$not:{$size:1}}, comments: {$not:{$size:0}}}]})
